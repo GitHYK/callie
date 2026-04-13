@@ -46,16 +46,11 @@ body::after{content:'';position:fixed;bottom:-200px;left:-200px;width:500px;heig
 
 /* ── APP ── */
 .app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;}
-header{padding:16px 24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 .logo{font-size:24px;font-weight:800;letter-spacing:-.5px;}
 .logo span{color:var(--accent);}
-.hbar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
 .stat-chip{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:5px 13px;font-size:15px;color:var(--text2);display:flex;align-items:center;gap:4px;}
 .stat-chip b{color:var(--text);}
-.nav-tabs{display:flex;gap:3px;padding:14px 24px 0;border-bottom:1px solid var(--border);overflow-x:auto;}
-.tab-btn{padding:10px 18px;border:none;background:none;color:var(--text2);font-family:inherit;font-size:17px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;border-radius:8px 8px 0 0;white-space:nowrap;}
-.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(233,69,96,.07);}
-.tab-btn:hover:not(.active){color:var(--text);background:var(--surface);}
+/* header, nav-tabs, hbar styles → responsive 섹션에서 정의 */
 .main{flex:1;padding:18px 24px;max-width:960px;margin:0 auto;width:100%;}
 .panel{display:none;}
 .panel.active{display:block;animation:fadeIn .3s ease;}
@@ -215,6 +210,32 @@ header{padding:16px 24px 0;display:flex;align-items:center;justify-content:space
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+/* ── 헤더 기본 (데스크탑) ── */
+header { padding: 16px 24px 0; display: flex; flex-direction: column; gap: 8px; }
+.header-row1 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.file-change-btn { font-size: 13px; padding: 4px 9px; opacity: .6; }
+.hbar { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; padding-bottom: 8px; }
+
+/* ── 탭 기본 (데스크탑) ── */
+.nav-tabs {
+  display: flex; gap: 3px; padding: 0 24px;
+  border-bottom: 1px solid var(--border); overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 10px 18px; border: none; background: none;
+  color: var(--text2); font-family: inherit; font-size: 16px; font-weight: 500;
+  cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: all .2s; border-radius: 8px 8px 0 0; white-space: nowrap;
+  display: flex; align-items: center; gap: 5px;
+}
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(233,69,96,.07); }
+.tab-btn:hover:not(.active) { color: var(--text); background: var(--surface); }
+.tab-icon { font-size: 15px; }
+.tab-txt { font-size: 14px; }
+
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 
 /* 태블릿 (≤ 860px) */
@@ -223,12 +244,14 @@ header{padding:16px 24px 0;display:flex;align-items:center;justify-content:space
   .ch-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
   .vocab-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 7px; }
   .quiz-card, .fill-card { padding: 20px; }
+  .nav-tabs { padding: 0 18px; }
+  .tab-btn { font-size: 14px; padding: 9px 14px; }
 }
 
 /* 모바일 (≤ 640px) */
 @media (max-width: 640px) {
 
-  /* 업로드 화면 */
+  /* ── 업로드 화면 ── */
   #uploadScreen { padding: 20px 16px; gap: 14px; }
   .ul-logo { font-size: 34px; }
   .ul-sub { font-size: 15px; }
@@ -237,106 +260,148 @@ header{padding:16px 24px 0;display:flex;align-items:center;justify-content:space
   .dz-s { font-size: 14px; }
   .fmt-box { padding: 14px; }
 
-  /* 헤더 */
-  header { padding: 12px 14px 0; gap: 8px; }
+  /* ── 헤더 ── */
+  header { padding: 10px 14px 0; gap: 6px; }
   .logo { font-size: 20px; }
-  .hbar { gap: 5px; }
-  .stat-chip { font-size: 13px; padding: 4px 10px; }
+  .header-actions { gap: 5px; }
+  .dl-badge, .save-default-badge { font-size: 13px; padding: 5px 10px; }
+  .hbar { gap: 5px; padding-bottom: 6px; }
+  .stat-chip { font-size: 12px; padding: 4px 9px; }
 
-  /* 탭: 가로 스크롤 유지 (탭 특성상 스크롤이 자연스러움) */
-  .nav-tabs { padding: 10px 14px 0; gap: 2px; }
-  .tab-btn { font-size: 13px; padding: 8px 11px; }
+  /* ── 탭: 4×2 그리드 ── */
+  .nav-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    overflow: visible;          /* 그리드라 스크롤 불필요 */
+    background: var(--surface);
+  }
+  .tab-btn {
+    flex-direction: column;     /* 이모지 위, 텍스트 아래 */
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 8px 4px;
+    font-size: 11px;
+    border-radius: 10px;
+    border-bottom: none;        /* 언더라인 제거 */
+    margin-bottom: 0;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    white-space: normal;
+    text-align: center;
+    min-height: 54px;           /* 터치 타겟 */
+  }
+  .tab-btn.active {
+    background: rgba(233,69,96,.18);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .tab-btn:hover:not(.active) {
+    background: var(--card);
+    border-color: var(--text2);
+  }
+  .tab-icon { font-size: 18px; line-height: 1; }
+  .tab-txt  { font-size: 10px; font-weight: 600; line-height: 1.2; color: inherit; }
 
-  /* 메인 컨텐츠 */
-  .main { padding: 12px 14px; }
+  /* ── 메인 컨텐츠 ── */
+  .main { padding: 12px 12px; }
   .sec-title { font-size: 18px; }
   .sec-sub { font-size: 14px; }
+  .sec-hdr { flex-direction: column; gap: 8px; }
+  .sec-hdr .btn-group { width: 100%; }
 
-  /* 챕터 그리드: 2열 */
+  /* ── 챕터 그리드: 2열 ── */
   .ch-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
   .ch-card { padding: 11px; }
-  .ch-name { font-size: 14px; }
-  .ch-num { font-size: 12px; }
-  .bdg { font-size: 12px; }
+  .ch-name { font-size: 13px; }
+  .ch-num  { font-size: 11px; }
+  .bdg     { font-size: 11px; }
 
-  /* 단어 카드: 2열 */
+  /* ── 단어 카드: 2열 ── */
   .vocab-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
   .vocab-card { padding: 10px 12px; min-height: 56px; }
-  .vcf .vcw { font-size: 15px; }
+  .vcf .vcw { font-size: 14px; }
   .vcf .vch { font-size: 12px; }
-  .vcb .vcm { font-size: 14px; }
-  .vcb .vco { font-size: 12px; }
-  /* 카드 액션 버튼: 항상 보이게 (터치는 hover 없음) */
-  .card-edit-btn, .card-speak-btn { opacity: 1; }
+  .vcb .vcm { font-size: 13px; }
+  .vcb .vco { font-size: 11px; }
+  .card-edit-btn, .card-speak-btn { opacity: 1; }  /* 터치: 항상 표시 */
 
-  /* 플래시카드 */
+  /* ── 플래시카드 ── */
+  .fc-wrap { gap: 10px; }
   .flashcard { padding: 22px 16px; min-height: 160px; }
-  .fc-en { font-size: 18px; }
-  .fc-ko { font-size: 16px; }
   .fc-lbl { font-size: 11px; }
-  .fc-btns { gap: 6px; }
-  .fc-btns .btn { font-size: 14px; padding: 8px 14px; }
+  .fc-en  { font-size: 18px; }
+  .fc-ko  { font-size: 15px; }
+  .fc-hint { font-size: 13px; }
+  .fc-btns { gap: 6px; justify-content: center; }
+  .fc-btns .btn { font-size: 13px; padding: 8px 13px; }
 
-  /* 예문 */
+  /* ── 예문 ── */
   .ex-en { font-size: 15px; }
   .ex-ko { font-size: 13px; }
 
-  /* 문장 리스트 */
-  .sent-en { font-size: 16px; }
-  .sent-ko { font-size: 14px; }
-  .sent-main { padding: 13px 14px; gap: 8px; }
-  .sent-actions { gap: 4px; }
-  .toggle-ex { font-size: 13px; padding: 4px 8px; }
+  /* ── 문장 목록 ── */
+  .sent-en   { font-size: 15px; }
+  .sent-ko   { font-size: 13px; }
+  .sent-main { padding: 12px 13px; gap: 8px; }
+  .sent-actions { gap: 4px; flex-shrink: 0; }
+  .toggle-ex { font-size: 12px; padding: 4px 8px; }
+  .ex-area   { padding: 10px 13px; }
 
-  /* 퀴즈 */
-  .quiz-card, .fill-card { padding: 18px 14px; border-radius: 14px; }
-  .quiz-q, .ww-qword { font-size: 18px; }
-  .quiz-sub { font-size: 14px; margin-bottom: 16px; }
-  .quiz-opt { font-size: 15px; padding: 11px 13px; min-height: 48px; }
-  .quiz-res { font-size: 15px; }
+  /* ── 퀴즈 ── */
+  .quiz-card, .fill-card { padding: 16px 13px; border-radius: 14px; }
+  .quiz-q    { font-size: 17px; }
+  .quiz-sub  { font-size: 13px; margin-bottom: 14px; }
+  .quiz-opts { gap: 7px; }
+  .quiz-opt  { font-size: 14px; padding: 12px 13px; min-height: 48px; }
+  .quiz-res  { font-size: 14px; }
   .score-num { font-size: 42px; }
-  .score-lbl { font-size: 15px; }
+  .score-lbl { font-size: 14px; }
 
-  /* 주관식 */
-  .fill-ko { font-size: 17px; }
-  .fill-input { font-size: 16px; padding: 11px 14px; } /* iOS 줌 방지 */
-  .fill-ans { font-size: 15px; }
+  /* ── 주관식 ── */
+  .ww-qword   { font-size: 22px; }
+  .fill-ko    { font-size: 16px; }
+  .fill-input { font-size: 16px; padding: 11px 13px; }  /* iOS 줌 방지 */
+  .fill-ans   { font-size: 14px; }
+  .fill-hint  { font-size: 14px; }
+  .hint-words { font-size: 17px; }
 
-  /* 스크립트 */
-  .script-body { font-size: 16px; line-height: 1.9; }
-  .script-card { padding: 16px; }
+  /* ── 스크립트 ── */
+  .script-card { padding: 15px; }
+  .script-body { font-size: 15px; line-height: 1.9; }
 
-  /* 모달: 하단 시트 */
+  /* ── 버튼 공통 ── */
+  .btn { font-size: 13px; padding: 7px 13px; }
+  .btn-group { gap: 5px; }
+
+  /* ── 프로그레스 ── */
+  .prog-info { font-size: 12px; }
+
+  /* ── 모달: 하단 시트 ── */
   .modal-ov { align-items: flex-end; padding: 0; }
   .modal-box {
     border-radius: 20px 20px 0 0;
     max-width: 100%;
-    padding: 22px 18px 36px;
+    padding: 20px 16px 36px;
   }
   .modal-title { font-size: 17px; }
-  .mi { font-size: 16px; } /* iOS 줌 방지 */
-
-  /* 버튼 그룹 */
-  .btn-group { gap: 5px; }
-  .btn { font-size: 14px; padding: 8px 14px; }
-
-  /* 섹션 헤더 */
-  .sec-hdr { flex-direction: column; gap: 8px; }
-  .sec-hdr .btn-group { width: 100%; }
-
-  /* 프로그레스 */
-  .prog-info { font-size: 12px; }
+  .mi { font-size: 16px; }  /* iOS 줌 방지 */
+  .modal-acts { gap: 6px; }
 }
 
 /* 초소형 (≤ 380px) */
 @media (max-width: 380px) {
-  .ul-logo { font-size: 28px; }
-  .ch-grid { grid-template-columns: 1fr 1fr; }
-  .vocab-grid { grid-template-columns: 1fr 1fr; }
-  .tab-btn { font-size: 12px; padding: 7px 9px; }
-  .quiz-q { font-size: 16px; }
-  .fc-en { font-size: 16px; }
-  .logo { font-size: 18px; }
+  .logo { font-size: 17px; }
+  .dl-badge, .save-default-badge { font-size: 12px; padding: 4px 8px; }
+  .stat-chip { font-size: 11px; padding: 3px 7px; }
+  .tab-icon { font-size: 16px; }
+  .tab-txt  { font-size: 9px; }
+  .tab-btn  { min-height: 48px; padding: 6px 3px; }
+  .fc-en    { font-size: 16px; }
+  .quiz-q   { font-size: 15px; }
 }
 </style>
 </head>
@@ -381,26 +446,30 @@ header{padding:16px 24px 0;display:flex;align-items:center;justify-content:space
 <!-- ── MAIN APP ── -->
 <div class="app" id="mainApp" style="display:none">
   <header>
-    <div class="logo">Callie <span>English</span></div>
+    <div class="header-row1">
+      <div class="logo">Callie <span>English</span></div>
+      <div class="header-actions">
+        <button class="dl-badge" onclick="downloadExcel()">⬇️ Excel</button>
+        <button class="save-default-badge" onclick="saveAsDefault()">💾 저장</button>
+        <button class="btn btn-secondary file-change-btn" onclick="backToUpload()">📂</button>
+      </div>
+    </div>
     <div class="hbar">
       <div class="stat-chip">📚 <b id="sCh">0</b> 챕터</div>
       <div class="stat-chip">🔤 <b id="sW">0</b> 단어</div>
       <div class="stat-chip">💬 <b id="sS">0</b> 주문장</div>
-      <button class="dl-badge" onclick="downloadExcel()">⬇️ Excel 다운로드</button>
-      <button class="save-default-badge" onclick="saveAsDefault()">💾 기본 데이터로 저장</button>
-      <button class="btn btn-secondary" style="font-size:13px;padding:4px 9px;opacity:.6" onclick="backToUpload()">📂 파일 변경</button>
     </div>
   </header>
 
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('chapters',this)">📖 챕터</button>
-    <button class="tab-btn" onclick="switchTab('vocab',this)">🔤 단어장</button>
-    <button class="tab-btn" onclick="switchTab('sentences',this)">💬 문장 목록</button>
-    <button class="tab-btn" onclick="switchTab('flashcard',this)">🃏 플래시카드</button>
-    <button class="tab-btn" onclick="switchTab('quiz',this)">🎯 단어 퀴즈</button>
-    <button class="tab-btn" onclick="switchTab('wordwrite',this)">✏️ 단어 주관식</button>
-    <button class="tab-btn" onclick="switchTab('sentquiz',this)">✍️ 문장 퀴즈</button>
-    <button class="tab-btn" onclick="switchTab('script',this)">📄 스크립트</button>
+    <button class="tab-btn active" onclick="switchTab('chapters',this)"><span class="tab-icon">📖</span><span class="tab-txt">챕터</span></button>
+    <button class="tab-btn" onclick="switchTab('vocab',this)"><span class="tab-icon">🔤</span><span class="tab-txt">단어장</span></button>
+    <button class="tab-btn" onclick="switchTab('sentences',this)"><span class="tab-icon">💬</span><span class="tab-txt">문장목록</span></button>
+    <button class="tab-btn" onclick="switchTab('flashcard',this)"><span class="tab-icon">🃏</span><span class="tab-txt">플래시카드</span></button>
+    <button class="tab-btn" onclick="switchTab('quiz',this)"><span class="tab-icon">🎯</span><span class="tab-txt">단어퀴즈</span></button>
+    <button class="tab-btn" onclick="switchTab('wordwrite',this)"><span class="tab-icon">✏️</span><span class="tab-txt">주관식</span></button>
+    <button class="tab-btn" onclick="switchTab('sentquiz',this)"><span class="tab-icon">✍️</span><span class="tab-txt">문장퀴즈</span></button>
+    <button class="tab-btn" onclick="switchTab('script',this)"><span class="tab-icon">📄</span><span class="tab-txt">스크립트</span></button>
   </div>
 
   <div class="main">
