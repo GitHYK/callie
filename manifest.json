@@ -2,7 +2,8 @@
   "name": "Callie English Study",
   "short_name": "Callie",
   "description": "Excel 기반 영어 학습 앱 — 단어·문장·퀴즈·스크립트",
-  "start_url": "./",
+  "start_url": "/callie/index.html",
+  "scope": "/callie/"
   "display": "standalone",
   "background_color": "#0f0f1a",
   "theme_color": "#0f0f1a",
