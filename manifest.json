@@ -1,12 +1,12 @@
 {
-  "name": "Callie English Study",
-  "short_name": "Callie",
-  "description": "Excel 기반 영어 학습 앱 — 단어·문장·퀴즈·스크립트",
-  "start_url": "/callie/index.html",
-  "scope": "/callie/"
+  "name": "영단어 8930",
+  "short_name": "영단어",
+  "description": "영어 단어 학습 앱 - 8930개 단어",
+  "start_url": "/words/index.html",
+  "start_url": "/words/",
   "display": "standalone",
-  "background_color": "#0f0f1a",
-  "theme_color": "#0f0f1a",
+  "background_color": "#0e0e10",
+  "theme_color": "#0e0e10",
   "orientation": "portrait-primary",
   "lang": "ko",
   "icons": [
@@ -25,15 +25,17 @@
   ],
   "shortcuts": [
     {
-      "name": "단어 플래시카드",
-      "short_name": "플래시카드",
-      "url": "./#flashcard",
+      "name": "퀴즈 시작",
+      "short_name": "퀴즈",
+      "description": "바로 퀴즈 모드로",
+      "url": "./?mode=quiz",
       "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "퀴즈",
-      "short_name": "퀴즈",
-      "url": "./#quiz",
+      "name": "즐겨찾기",
+      "short_name": "즐겨찾기",
+      "description": "즐겨찾기 단어만 보기",
+      "url": "./?mode=bookmark",
       "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
     }
   ]
